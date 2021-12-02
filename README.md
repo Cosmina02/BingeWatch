@@ -9,11 +9,16 @@ legatura cu un anumit episod dintr-un serial și va oferi o lista a acestora (re
 dacă apar altele).
 
 INPUT:
+
 Adaugare serial ( link imdb si scor )
+
 Stergere serial
+
 Modificare scor
+
 snooze/unsnooze ( dacă e snoozed un serial nu va apărea în lista de seriale cu episoade noi
 )
+
 Listare - va lista toate episoadele noi ale serialelor din db ( mai puțin cele snoozed )
 
 OUTPUT:
