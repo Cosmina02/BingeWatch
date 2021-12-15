@@ -9,7 +9,8 @@ class TvShow(Base):
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     title = Column("title", String, nullable=False)
     link = Column("link", String, nullable=False)
-    last_episode = Column("last_episode", String)
+    last_season = Column("last_season",Integer)
+    last_episode = Column("last_episode", Integer)
     last_date = Column("last_date", Date)
     score = Column("score", Integer)
     snoozed = Column("snoozed", Boolean, default=False)
@@ -17,6 +18,7 @@ class TvShow(Base):
     def __init__(self, title, link):
         self.title = title
         self.link = link
+        self.last_season = None
         self.last_episode = None
         self.last_date = None
         self.score = None
@@ -24,7 +26,7 @@ class TvShow(Base):
     def set_last_episode(self, last_episode):
         self.last_episode = last_episode
 
-    def set_last_date(self,last_date):
+    def set_last_date(self, last_date):
         self.last_date = last_date
 
     def set_score(self, score):

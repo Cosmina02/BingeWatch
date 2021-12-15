@@ -1,15 +1,30 @@
 from src.db.session import session_scope
-from src.test.test import *
+from src.db_interaction.interaction import *
 from src.model.TVShow import*
 
 
 if __name__ == '__main__':
 
     with session_scope() as crt_session:
-        test = Test(crt_session)
-        show = TvShow("you", f"https://www.imdb.com/title/tt0413573/?ref_=fn_al_tt_1")
-        test.insert_show(show)
-        test.insert_show(TvShow(f"How to get away with murder", f"https://www.imdb.com/title/tt3205802/?ref_=fn_al_tt_1"))
-        shows = test.get_all_shows()
-        print(shows)
+        repo = Interaction(crt_session)
+        # show = TvShow("Suits", f"https://www.imdb.com/title/tt1632701/?ref_=fn_al_tt_1")
+        # repo.insert_show(show)
+        # repo.insert_show(TvShow(f"Grey's Anatomy", f"https://www.imdb.com/title/tt0413573/?ref_=nv_sr_srsg_0"))
+        # repo.insert_show(TvShow(f"The Mentalist", f"https://www.imdb.com/title/tt1196946/?ref_=nv_sr_srsg_0"))
+
+        repo.delete_show(f"Grey's Anatomy")
+        shows = repo.get_all_shows()
+        for show in shows:
+            print(show.title, " ", show.link, " ",show.last_season, " ", show.last_episode, " ",
+                  show.last_date, " ", show.score, " ", show.snoozed)
+
+        # repo.update_last_watched_episode("Suits", 1, 2)
+        # repo.update_last_watched_date("Suits", f"2021-11-03")
+
+        # repo.update_score("The Mentalist", 6)
+        #
+        # repo.snooze_tv_show("Grey's Anatomy")
+
+
+
 
