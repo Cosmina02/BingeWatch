@@ -9,15 +9,15 @@ class TvShow(Base):
     id = Column("id", Integer, primary_key=True, autoincrement=True)
     title = Column("title", String, nullable=False)
     link = Column("link", String, nullable=False)
-    last_season = Column("last_season",Integer)
+    last_season = Column("last_season", Integer)
     last_episode = Column("last_episode", Integer)
     last_date = Column("last_date", Date)
     score = Column("score", Integer)
     snoozed = Column("snoozed", Boolean, default=False)
 
-    def __init__(self, title, link):
+    def __init__(self, title):
         self.title = title
-        self.link = link
+        self.link = None
         self.last_season = None
         self.last_episode = None
         self.last_date = None
@@ -31,4 +31,3 @@ class TvShow(Base):
 
     def set_score(self, score):
         self.score = score
-
