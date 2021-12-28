@@ -7,7 +7,7 @@ def get_youtube_uploads(search_words):
     search_words.replace("'", "+")
     search_words.replace(" ", "+")
     site = site + search_words
-
+    # print(site)
     r = requests.get(site)
     r.raise_for_status()
 
@@ -16,4 +16,7 @@ def get_youtube_uploads(search_words):
 
     return video_ids
 
-
+# if __name__ == '__main__':
+#     videos = get_youtube_uploads("Suits season 1")
+#     for video in videos:
+#         print("https://www.youtube.com/watch?v="+video)
