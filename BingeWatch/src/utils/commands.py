@@ -2,11 +2,12 @@ from src.model.TVShow import TvShow
 from src.utils.youtube_crawler import get_youtube_uploads
 from datetime import datetime, date
 from src.utils.tv_maze_crawler import get_show_episode
+# TODO: la list new episodes de modificat
 
 
 def add_tvShow(repo):
     show_title = input("Please enter the name of the TvShow you want to add: ")
-    if repo.is_show_in_db(show_title) is False:
+    if not repo.is_show_in_db(show_title):
         repo.insert_show(TvShow(show_title))
     else:
         print("The show you just enter is already in the database.")
@@ -14,7 +15,7 @@ def add_tvShow(repo):
 
 def delete_tvShow(repo):
     show_title = input("Please enter the name of the TvShow you want to delete: ")
-    if repo.is_show_in_db(show_title) is False:
+    if not repo.is_show_in_db(show_title):
         print("You are trying to delete a show that doesn't exist!")
     else:
         repo.delete_show(show_title)
@@ -22,7 +23,7 @@ def delete_tvShow(repo):
 
 def modify_score(repo):
     show_title = input("Please enter the name of the TvShow for which you want to modify the score: ")
-    if repo.is_show_in_db(show_title) is False:
+    if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
     else:
         score = input("Please enter the score: ")
@@ -33,7 +34,7 @@ def modify_score(repo):
 
 def snooze(repo):
     show_title = input("Please enter the name of the TvShow you want to snooze: ")
-    if repo.is_show_in_db(show_title) is False:
+    if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
     else:
         repo.snooze_tv_show(show_title)
@@ -41,7 +42,7 @@ def snooze(repo):
 
 def unsnooze(repo):
     show_title = input("Please enter the name of the TvShow you want to unsnooze: ")
-    if repo.is_show_in_db(show_title) is False:
+    if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
     else:
         repo.unsnooze_tv_show(show_title)
@@ -63,7 +64,7 @@ def see_youtube_uploads(repo):
 
 def update_episode(repo):
     show_title = input("Please enter the name of the TvShow you want to update the episode: ")
-    if repo.is_show_in_db(show_title) is False:
+    if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
     else:
         decision = input("Did you start a new season? y/n ")
@@ -83,7 +84,7 @@ def update_episode(repo):
 
 def update_last_watched_date(repo):
     show_title = input("Please enter the name of the TvShow")
-    if repo.is_show_in_db(show_title) is False:
+    if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
     else:
         data = input("Please enter the date! The format is YYYY-MM-DD : ")
@@ -96,7 +97,7 @@ def update_last_watched_date(repo):
 
 
 def list_new_episodes(repo):
-    print("Listing may take a few seconds... Please wait patiently")
+    print("Listing may take a few seconds... Please wait patiently\n")
     shows = repo.get_all_unsnoozed_shows()
     for show in shows:
         all_episodes = get_show_episode(show.title)
@@ -112,9 +113,10 @@ def list_new_episodes(repo):
             for key, value in all_episodes.items():
                 if key == season:
                     i = value.index(episode)
-                    print(f"season:{key}, episodes:", end="")
+                    remaining_episodes = list()
                     for v in range(i+1, len(value)):
-                        print(f"{value[v]}, ", end="")
+                        remaining_episodes.append(v)
+                    print(f"season:{key}, episodes:{remaining_episodes}")
                 elif key > season:
                     print(f"season:{key}, episodes: {value}")
             print("\n")
@@ -184,8 +186,9 @@ def pick_command(repo):
                   "7.See youtube uploads\n"
                   "8.Update last seen episode\n"
                   "9.Update last seen at this date\n"
-                  "10.Help\n"
-                  "11.Exit\n")
+                  "10.List all shows\n"
+                  "11.Help\n"
+                  "12.Exit\n")
         else:
             print("Unknown command! Try again!")
         command = input("Please pick one number:\nIf you forgot the commands please enter 11 to see them all:  ")

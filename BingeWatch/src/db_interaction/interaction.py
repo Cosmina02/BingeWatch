@@ -101,8 +101,4 @@ class Interaction:
             return last_seen_episode
 
     def is_show_in_db(self, show_title):
-        show = self.session.query(TvShow).filter(func.lower(TvShow.title) == show_title.lower()).one()
-        if show is not None:
-            return True
-        else:
-            return False
+        return self.session.query(TvShow).filter(func.lower(TvShow.title) == show_title.lower()).scalar() is not None
