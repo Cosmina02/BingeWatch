@@ -33,6 +33,9 @@ class Interaction:
     def get_all_shows(self):
         return self.session.query(TvShow).all()
 
+    def get_all_unsnoozed_shows(self):
+        return self.session.query(TvShow).filter(TvShow.snoozed == False).all()
+
     def update_last_watched_episode(self, show_title, episode, season=None):
         try:
             if season is None:
@@ -96,3 +99,10 @@ class Interaction:
         else:
             last_seen_episode = "season " + str(show_info.last_season) + " episode " + str(show_info.last_episode)
             return last_seen_episode
+
+    def is_show_in_db(self, show_title):
+        show = self.session.query(TvShow).filter(func.lower(TvShow.title) == show_title.lower()).one()
+        if show is not None:
+            return True
+        else:
+            return False

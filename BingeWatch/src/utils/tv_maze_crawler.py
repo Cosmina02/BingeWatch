@@ -22,7 +22,6 @@ def get_show_episode(show_title):
     episode_list = list()
     season = 1
     for data in json_data:
-        print(f"season {data['season']} , number  { data['number']}")
         if season == data['season']:
             episode_list.append(data['number'])
         else:
@@ -32,11 +31,3 @@ def get_show_episode(show_title):
             episode_list.append(data['number'])
     episode_dict[season] = episode_list
     return episode_dict
-
-
-if __name__ == '__main__':
-    show_title = "Grey's Anatomy"
-    episodes = get_show_episode(show_title)
-    for key,value in episodes.items():
-        print(f"season:{key}, episodes{value}")
-
