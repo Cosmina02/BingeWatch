@@ -2,10 +2,14 @@ from src.model.TVShow import TvShow
 from src.utils.youtube_crawler import get_youtube_uploads
 from datetime import datetime, date
 from src.utils.tv_maze_crawler import get_show_episode
-# TODO: la list new episodes de modificat
 
 
 def add_tvShow(repo):
+    """
+        Calls the insert_show method from the Interaction class
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     show_title = input("Please enter the name of the TvShow you want to add: ")
     if not repo.is_show_in_db(show_title):
         repo.insert_show(TvShow(show_title))
@@ -14,6 +18,11 @@ def add_tvShow(repo):
 
 
 def delete_tvShow(repo):
+    """
+        Calls the delete_show method from the Interaction class
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     show_title = input("Please enter the name of the TvShow you want to delete: ")
     if not repo.is_show_in_db(show_title):
         print("You are trying to delete a show that doesn't exist!")
@@ -22,17 +31,27 @@ def delete_tvShow(repo):
 
 
 def modify_score(repo):
+    """
+        Calls the update_score method from the Interaction class
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     show_title = input("Please enter the name of the TvShow for which you want to modify the score: ")
     if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
     else:
         score = input("Please enter the score: ")
-        while 0 > int(score) > 10:
+        while int(score) < 0 or int(score) > 10:
             score = input("Please enter a valid score(between 0 and 10): ")
         repo.update_score(show_title, score)
 
 
 def snooze(repo):
+    """
+        Calls the snooze_tv_show method from the Interaction class
+    :param repo:an instance of the Interaction class
+    :return: None
+    """
     show_title = input("Please enter the name of the TvShow you want to snooze: ")
     if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
@@ -41,6 +60,11 @@ def snooze(repo):
 
 
 def unsnooze(repo):
+    """
+        Calls the unsnooze_tv_show method from the Interaction class
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     show_title = input("Please enter the name of the TvShow you want to unsnooze: ")
     if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
@@ -49,6 +73,12 @@ def unsnooze(repo):
 
 
 def see_youtube_uploads(repo):
+    """
+        Displays the youtube uploads for a tv show. If the user wants to see uploads about the last
+    watched episode it can choose to.
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     show_title = input("Please enter the name of the TvShow want to see youtube uploads about: ")
     decision = input("Do you want to see uploads about the last episode you watched?y/n ")
 
@@ -63,6 +93,12 @@ def see_youtube_uploads(repo):
 
 
 def update_episode(repo):
+    """
+        Updates the last watched episode by calling the update_last_episode method from the interaction class.
+    The user can say if they started a new season or not,if they didn't the season will not be changed.
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     show_title = input("Please enter the name of the TvShow you want to update the episode: ")
     if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
@@ -83,6 +119,12 @@ def update_episode(repo):
 
 
 def update_last_watched_date(repo):
+    """
+        Updates the last watched date for an episode. If an user doesn't update it will be automatically
+    updated when the last episode is updated.
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     show_title = input("Please enter the name of the TvShow")
     if not repo.is_show_in_db(show_title):
         print("The show you entered doesn't exist. Press 1 if you want to add it in you database.")
@@ -97,6 +139,11 @@ def update_last_watched_date(repo):
 
 
 def list_new_episodes(repo):
+    """
+        Displays all the new episodes for all the shows that are not snoozed.
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     print("Listing may take a few seconds... Please wait patiently\n")
     shows = repo.get_all_unsnoozed_shows()
     for show in shows:
@@ -123,12 +170,22 @@ def list_new_episodes(repo):
 
 
 def list_all_shows(repo):
+    """
+        Displays all the shows.
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     shows = repo.get_all_shows()
     for show in shows:
-        print(show.title, show.snoozed)
+        print(show.title)
 
 
 def pick_command(repo):
+    """
+        Command line method. Displays all the commands and lets the user choose.
+    :param repo: an instance of the Interaction class
+    :return: None
+    """
     print("Hello! Welcome to BingeWatch!\n "
           "You can choose from the following commands:\n"
           "1.Add a TvShow\n"

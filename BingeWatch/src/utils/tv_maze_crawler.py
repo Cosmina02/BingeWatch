@@ -3,6 +3,11 @@ from requests import get
 
 
 def get_tv_show_id(show_title):
+    """
+        Methods that gets the show's id. It makes a request on the tv maze api and gets the id.
+    :param show_title: str (the show title we need the id)
+    :return:
+    """
     url = r"https://api.tvmaze.com/search/shows?q="
     show_title.replace("'", "+")
     show_title.replace(" ", "+")
@@ -14,8 +19,14 @@ def get_tv_show_id(show_title):
 
 
 def get_show_episode(show_title):
-    id = get_tv_show_id(show_title)
-    url = r"https://api.tvmaze.com/shows/" + str(id) + "/episodes"
+    """
+        Method that makes a request on the tv maze api and retrieves all the seasons and
+    episodes of the requested tv show.
+    :param show_title: str ( the show title we want to get all the episodes)
+    :return: a dictionary with all the seasons and episodes of the tv show
+    """
+    show_id = get_tv_show_id(show_title)
+    url = r"https://api.tvmaze.com/shows/" + str(show_id) + "/episodes"
     response = get(url)
     json_data = json.loads(response.text)
     episode_dict = dict()

@@ -1,3 +1,6 @@
+"""
+Dictionary with the parameters for the database connection
+"""
 postgresql = {
     'pguser': 'postgres',
     'pgpasswd': 'cosmina1',
